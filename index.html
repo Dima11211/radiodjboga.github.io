@@ -22,6 +22,9 @@
             color: #333;
             text-align: center;
         }
+        h2, h3 {
+            color: #555;
+        }
         .player-container {
             margin: 20px 0;
             border-radius: 8px;
@@ -30,7 +33,7 @@
         }
         iframe {
             width: 100%;
-            height: 120px; /* Высота плеера */
+            height: 120px;
             border: none;
             display: block;
         }
@@ -39,13 +42,31 @@
             line-height: 1.6;
             color: #666;
         }
+        .greeting {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #e81e4d;
+        }
+        .error-404 {
+            text-align: center;
+            font-size: 72px;
+            color: #e81e4d;
+            margin: 20px 0;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Заголовок как на картинке -->
         <h1>RADIO DJ BOGA</h1>
+        <h2>РАДИО DJ BOGA</h2>
         
-        <!-- Здесь будет вставлен плеер из player.html -->
+        <!-- Элемент 404 (декоративный) -->
+        <div class="error-404">404</div>
+        
+        <!-- Плеер -->
         <div class="player-container">
             <iframe src="player.html" 
                     frameborder="0" 
@@ -55,11 +76,11 @@
             </iframe>
         </div>
         
-        <!-- Ваш контент -->
-        <div class="content">
-            <h2>Добро пожаловать!</h2>
-            <p>Hi, I'm DJ BOGA from the radio. I love electronic music, and I hope you, my dear listeners, will also enjoy our music and the quality of our playlist.</p>
-            <p>You'll also have the opportunity to hear my original works, as I'm a DJ BOGA, a beginner writer of my own tracks and songs.</p>
+        <!-- Ваш текст приветствия -->
+        <div class="greeting">
+            <h3>Добро пожаловать!</h3>
+            <p>Привет, я диджей BOGA с радио. Я люблю электронную музыку и надеюсь, что вам, мои дорогие слушатели, тоже понравится наша музыка и наш плейлист.</p>
+            <p>У вас также будет возможность послушать мои авторские работы, ведь я диджей BOGA, начинающий автор собственных треков и песен.</p>
         </div>
     </div>
 </body>
