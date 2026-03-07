@@ -1,22 +1,198 @@
-<!DOCTYPE html>
-<!-- saved from url=(0067)https://cloud.caster.fm/player/a136d51d-4d90-4173-a9a8-41513fe91d71 -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<div id="playerChannelWrapper" x-data="channelSelector('streamPlayer')">
+    <div id="playerWrapper" x-data="streamPlayer()">
         
-        <title>Stream Player</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="referrer" content="no-referrer-when-downgrade">
-        <style>
-            body,
-            html {
-                padding: 0;
-                margin: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="cstrEmbed" data-type="newStreamPlayer" data-publictoken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelid="a136d51d-4d90-4173-a9a8-41513fe91d71" data-rendered="true" style="width: 100%; height: 192px;"><iframe src="./Stream Player_files/saved_resource.html" id="casterfmWidgetIframe_3cik0" style="width: 100%; border: 0px; height: 192px;"></iframe></div>
-        <script src="./Stream Player_files/embed.js"></script>
-    <script defer="" src="./Stream Player_files/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;18807f9ffa564b178bbd596d60f94efd&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+        <!-- Блок с информацией о текущем треке -->
+        <div class="ui box attached segment" x-bind:class="{ 'top': (!multipleChannels), 'attached': (!collapsed) }" x-show="!collapsed">
+            <div class="tw-flex-no-wrap tw-flex tw-items-center tw-justify-between" id="player-now-playing-wrapper">
 
+                <!-- Плейсхолдер загрузки -->
+                <div id="player-now-playing-placeholder-container" x-show="displayState !== 'ready'">
+                    <div id="player-now-playing-placeholder">
+                        <div class="cover skeleton"></div>
+                        <div class="metadata skeletons">
+                            <div class="skeleton tw-mb-2" style="width:30%;height:12px;"></div>
+                            <div class="skeleton tw-mb-2" style="width:60%;height:20px;"></div>
+                            <div class="skeleton" style="width:50%;height:12px;"></div>
+                        </div>
+                    </div>
+                </div>
 
-</body></html>
+                <!-- Информация о текущем треке -->
+                <div id="player-now-playing-container" style="display: none;" x-show="displayState === 'ready'">
+                    <div id="player-now-playing">
+                        <div class="cover">
+                            <img class="ui rounded image" x-bind:src="metadata.cover" />
+                        </div>
+                        <div class="metadata">
+                            <h3 class="ui header">
+                                <div class="tw-mt-1">
+                                    <span x-bind:class="{ 'link': metadata.link !== null }" 
+                                          @click="if (metadata.link !== null) pjaxNavigate(metadata.link)"
+                                          x-text="metadata.title"></span>
+                                    <div class="sub header" style="font-weight: 600;" x-text="metadata.currentTrack"></div>
+                                </div>
+
+                                <!-- Бейджи со статусами -->
+                                <div class="badges tw-mt-1">
+                                    <div class="ui small label tw-ml-0"
+                                         x-bind:class="{
+                                            'black': (metadata.statusCode === 'off' || metadata.statusCode === 'next'),
+                                            'red': metadata.statusCode === 'now'
+                                         }"
+                                         x-text="metadata.status"></div>
+                                    <div class="ui red small label tw-ml-0" 
+                                         x-show="metadata.type !== null && metadata.type !== ''"
+                                         x-text="metadata.type"
+                                         x-bind:class="{
+                                            'red': metadata.typeColor === 'red',
+                                            'orange': metadata.typeColor === 'orange',
+                                            'purple': metadata.typeColor === 'purple',
+                                            'blue': metadata.typeColor === 'blue',
+                                            'green': metadata.typeColor === 'green'
+                                         }">
+                                    </div>
+                                    <div class="ui small label tw-ml-0" 
+                                         x-show="metadata.startDate !== null && metadata.startDate !== ''">
+                                        <i class="hourglass start icon"></i> 
+                                        <span x-text="metadata.startDate"></span>
+                                    </div>
+                                    <div class="ui small label tw-ml-0" 
+                                         x-show="metadata.endDate !== null && metadata.endDate !== ''">
+                                        <i class="hourglass end icon"></i> 
+                                        <span x-text="metadata.endDate"></span>
+                                    </div>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка переключения между текущим и следующим шоу -->
+                <div style="display:none;margin-left:10px;" 
+                     x-show="$store.schedule.enabled && $store.schedule.nextShow !== null && displayState === 'ready'">
+                    <i class="huge icons" id="player-toggle-display-button" style="font-size: 3em;"
+                        @click="setDisplay((currentDisplay === 'currentShow')?'nextShow':'currentShow')">
+                        <i class="grey calendar alternate outline icon"></i>
+                        <i class="accented corner right history icon" 
+                           x-bind:class="{ 'flipped': currentDisplay === 'currentShow' }"></i>
+                    </i>
+                </div>
+            </div>
+
+            <!-- Сообщение об ошибке -->
+            <div class="ui tiny red bottom overlay nag" 
+                 x-bind:class="{ 'tw-hidden': playerErrorMessage === null, 'tw-block': playerErrorMessage !== null }"
+                 x-show="playerErrorMessage !== null">
+                <div class="title" x-text="playerErrorMessage"></div>
+                <i class="close icon" @click.prevent="playerErrorMessage = null"></i>
+            </div>
+        </div>
+
+        <!-- Панель управления плеером -->
+        <div class="ui bottom attached box secondary segment sm:tw-flex-no-wrap tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-p-2 tw-pt-4"
+             id="player-buttons-container" 
+             x-bind:style="$store.schedule.enabled === true && { 'padding-top': '10px!important' }"
+             x-bind:class="{ 'bottom attached': (multipleChannels || !collapsed) }">
+            
+            <!-- Прогресс-бар -->
+            <div id="stream-player-progress-bar" x-show="$store.schedule.enabled">
+                <div class="highlighted" x-show="displayState === 'ready'"></div>
+            </div>
+
+            <!-- Левая группа кнопок -->
+            <div>
+                <!-- Кнопка сворачивания/разворачивания -->
+                <button class="ui tiny primary icon button" style="font-weight: 600;"
+                        x-bind:data-tooltip="collapsed ? 'Expand player' : 'Collapse player'"
+                        @click="collapsed = !collapsed">
+                    <i class="caret icon" x-bind:class="{ 'up': !collapsed, 'down': collapsed }"></i>
+                </button>
+
+                <!-- Кнопка истории последних треков -->
+                <button class="ui tiny grey icon button left pointing manual noaction dropdown tw-ml-2"
+                        data-tooltip="Last played tracks" 
+                        x-show="getStreamInfoText() !== null && metadata.recentTracks.length > 0">
+                    <i class="history icon"></i>
+                    <div class="menu">
+                        <div class="header">Last Played Tracks</div>
+                        <template x-for="(track, index) in metadata.recentTracks">
+                            <div class="item">
+                                <span class="ui large text" x-text="track.title" x-bind:id="'recent-track-' + index"></span>
+                                <a data-tooltip="Search on YouTube" target="_blank"
+                                   x-bind:href="'https://www.youtube.com/results?search_query=' + track.title">
+                                    <i class="large red youtube icon tw-ml-0 tw-ml-3"></i>
+                                </a>
+                                <span class="save-clipboard" data-tooltip="Copy to Clipboard" 
+                                      x-bind:data-clipboard-text="track.title">
+                                    <i class="large gray copy icon tw-ml-0 tw-ml-1"></i>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </button>
+
+                <!-- Кнопка открытия в отдельном окне -->
+                <button class="ui tiny grey icon button tw-ml-2" 
+                        data-tooltip="Open in popup"
+                        x-on:click.prevent="window.open(window.casterfmCloud.routes.player, '_blank', 'toolbar=false,scrollbars=false,resizable=yes,width=600,height=335');">
+                    <i class="external alternate icon"></i>
+                </button>
+
+                <!-- Кнопка получения embed кода -->
+                <button class="ui tiny grey icon button tw-ml-2" 
+                        data-tooltip="Get embed code" 
+                        style="display: none;"
+                        x-on:click.prevent="openEmbedModal()" 
+                        x-show="embedEnabled">
+                    <i class="code icon"></i>
+                </button>
+
+                <!-- Модальное окно с embed кодом -->
+                <div class="ui tiny modal" id="playerEmbedModal">
+                    <i class="close icon"></i>
+                    <h2 class="ui header">
+                        Embed The Radio Player In Your Website
+                        <div class="sub header">Copy the code below and paste it into your website.</div>
+                    </h2>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="ui fluid icon input save-clipboard" data-clipboard-target="#playerEmbedCode">
+                                <textarea class="ui input" id="playerEmbedCode" readonly>
+<div class="cstrEmbed" data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="FFFFFF" data-channelId="" data-rendered="false">
+<a href="https://www.caster.fm">Shoutcast Hosting</a> <a href="https://www.caster.fm">Stream Hosting</a> <a href="https://www.caster.fm">Radio Server Hosting</a></div>
+<script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+                                </textarea>
+                                <i class="circular outline copy link icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая группа элементов управления (громкость и play/stop) -->
+            <div class="player-controls-wrapper">
+                <!-- Регулятор громкости -->
+                <div class="volume-wrapper">
+                    <i class="volume off icon tw-mr-0"></i>
+                    <div class="ui slider" id="volumeSlider"></div>
+                    <i class="volume up icon"></i>
+                </div>
+
+                <!-- Главная кнопка Play/Stop -->
+                <button class="ui labeled disabled loading primary icon button" 
+                        style="font-weight: 600;" 
+                        @click="playerAction()"
+                        x-bind:class="{ 'disabled loading': (playerState === 'init' || playerState === 'loading') }">
+                    <i class="icon" x-bind:class="{
+                            'pause': (playerState==='playing'), 
+                            'play': (playerState === 'stopped')
+                        }"></i>
+                    <span x-text="(playerState==='stopped') ? 'Play' : 'Stop'">Play</span>
+                </button>
+
+                <!-- Аудио элемент (скрытый) -->
+                <audio id="playerAudioElement" style="display: none;" preload="none" autostart="false" controls=""></audio>
+            </div>
+        </div>
+    </div>
+</div>
