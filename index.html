@@ -1,167 +1,52 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>RADIO DJ BOGA</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<!-- saved from url=(0067)https://cloud.caster.fm/player/a136d51d-4d90-4173-a9a8-41513fe91d71 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        .container {
-            max-width: 800px;
-            width: 90%;
-            margin: 20px auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        h2 {
-            color: #666;
-            text-align: center;
-            font-size: 1.5em;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 300;
-        }
-        
-        h3 {
-            color: #444;
-            font-size: 1.8em;
-            margin: 20px 0 10px;
-        }
-        
-        .error-404 {
-            text-align: center;
-            font-size: 120px;
-            color: rgba(232, 30, 77, 0.1);
-            margin: -20px 0 -30px;
-            font-weight: bold;
-            user-select: none;
-        }
-        
-        .player-container {
-            margin: 30px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            background: #f5f5f5;
-            height: 140px;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 140px;
-            border: none;
-            display: block;
-        }
-        
-        .greeting {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 30px;
-            border-left: 5px solid #e81e4d;
-        }
-        
-        .greeting p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #444;
-            margin: 15px 0;
-        }
-        
-        .greeting p:first-child {
-            margin-top: 0;
-        }
-        
-        .greeting p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Анимация для 404 */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-        
-        .error-404:hover {
-            animation: glitch 0.3s infinite;
-            color: rgba(232, 30, 77, 0.2);
-        }
-        
-        /* Адаптация для мобильных */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        <title>Stream Player</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="referrer" content="no-referrer-when-downgrade">
+        <style>
+            body,
+            html {
+                padding: 0;
+                margin: 0;
             }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            h2 {
-                font-size: 1.2em;
-            }
-            
-            .error-404 {
-                font-size: 80px;
-            }
-            
-            .greeting {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Заголовки как на вашем изображении -->
-        <h1>RADIO DJ BOGA</h1>
-        <h2>РАДИО DJ BOGA</h2>
-        
-        <!-- Декоративный элемент 404 -->
-        <div class="error-404">404</div>
-        
-        <!-- Контейнер для плеера -->
-        <div class="player-container">
-            <iframe src="player.html" 
-                    frameborder="0" 
-                    scrolling="no"
-                    allowtransparency="true"
-                    title="Radio Player">
-            </iframe>
-        </div>
-        
-        <!-- Ваш текст приветствия -->
-        <div class="greeting">
-            <h3>Добро пожаловать!</h3>
-            <p>Привет, я диджей BOGA с радио. Я люблю электронную музыку и надеюсь, что вам, мои дорогие слушатели, тоже понравится наша музыка и наш плейлист.</p>
-            <p>У вас также будет возможность послушать мои авторские работы, ведь я диджей BOGA, начинающий автор собственных треков и песен.</p>
-        </div>
+        </style>
+    </head>
+    <body>
+        <style>
+    /* Контейнер для плеера */
+    .player-wrapper {
+        position: relative;
+        width: 100%;
+        height: 192px; /* Та же высота, что и у плеера */
+        overflow: hidden; /* Чтобы блок не вылезал за пределы */
+    }
+    
+    /* Белый блок, который перекроет логотип */
+    .white-cover {
+        position: absolute;
+        bottom: 5px; /* Обычно логотип внизу */
+        right: 5px; /* Обычно логотип справа */
+        width: 100px; /* Ширина прямоугольника */
+        height: 25px; /* Высота прямоугольника */
+        background-color: white;
+        z-index: 10; /* Чтобы был поверх iframe */
+        pointer-events: none; /* Чтобы блок не мешал нажимать на кнопки плеера */
+    }
+</style>
+
+<div class="player-wrapper">
+    <div class="cstrEmbed" data-type="newStreamPlayer" data-publictoken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelid="a136d51d-4d90-4173-a9a8-41513fe91d71" data-rendered="true" style="width: 100%; height: 192px;">
+        <iframe src="./Stream Player_files/saved_resource.html" id="casterfmWidgetIframe_3cik0" style="width: 100%; border: 0px; height: 192px;"></iframe>
     </div>
-</body>
-</html>
+    
+    <!-- Белый прямоугольник поверх логотипа -->
+    <div class="white-cover"></div>
+</div>
+        <div class="cstrEmbed" data-type="newStreamPlayer" data-publictoken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelid="a136d51d-4d90-4173-a9a8-41513fe91d71" data-rendered="true" style="width: 100%; height: 192px;"><iframe src="./Stream Player_files/saved_resource.html" id="casterfmWidgetIframe_3cik0" style="width: 100%; border: 0px; height: 192px;"></iframe></div>
+        <script src="./Stream Player_files/embed.js"></script>
+    <script defer="" src="./Stream Player_files/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;18807f9ffa564b178bbd596d60f94efd&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+</body></html>
