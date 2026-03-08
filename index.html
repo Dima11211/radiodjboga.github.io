@@ -20,6 +20,13 @@
             height: 700px !important;
             z-index: 1000; /* Чтобы плеер был поверх других элементов */
         }
+        /* Задаем высоту самому iframe плеера */
+    .player-container iframe {
+        width: 100% !important;
+        height: 700px !important; /* Должна совпадать с высотой контейнера */
+        min-height: 700px !important;
+        max-height: none !important; /* Убираем ограничение */
+    }
     </style>
 </head>
 <body>
@@ -38,6 +45,7 @@
     </div>
 </body>
 </html>
+
 
 
 
