@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: relative; left: 1680px;"> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Плеер</title>
@@ -14,34 +13,26 @@
         
         /* Контейнер для плеера с возможностью перемещения */
         .player-container {
-            position: absolute;  /* Позволяет двигать плеер */
-            top: 20px;           /* Расстояние от верхнего края */
-            left: 0%;            /* Расстояние от левого края */  
-            right: 10px;                    
-            transform: translateX(-50%); /* Центрирование по горизонтали */
-            width: 100%;
+            position: absolute;
+            top: 100px;  /* Измените это значение */
+            left: 100px; /* Измените это значение */
+            width: auto;  /* Автоматическая ширина */
+            z-index: 1000; /* Чтобы плеер был поверх других элементов */
         }
     </style>
 </head>
 <body>
-    <!-- Только плеер -->
-    <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="dark" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed"><a href="https://www.caster.fm">Shoutcast Hosting</a> <a href="https://www.caster.fm">Stream Hosting</a> <a href="https://www.caster.fm">Radio Server Hosting</a></div><script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+    <!-- Изображение (перенес из head в body) -->
+    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
+    
+    <!-- Плеер -->
+    <div class="player-container">
+        <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="dark" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a> 
+            <a href="https://www.caster.fm">Stream Hosting</a> 
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        </div>
+        <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+    </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
