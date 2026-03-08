@@ -11,41 +11,23 @@
             min-height: 100vh;
         }
         
-        /* Контейнер для плеера */
+        /* Контейнер для плеера с возможностью перемещения */
         .player-container {
             position: absolute;
-            top: 200px;
-            left: -12px;
-            width: 1000px;        /* Ширина контейнера */
-            height: 800px;         /* Высота контейнера */
-            z-index: 1000;
-        }
-        
-        /* Стили для iframe */
-        .player-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;   /* Если нужны скругленные углы */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Тень для красоты */
+            top: 200px;  /* Измените это значение */
+            left: -12px; /* Измените это значение */
+            width: 700px;/* Автоматическая ширина */  
+            height: 700px;
+            z-index: 1000; /* Чтобы плеер был поверх других элементов */
         }
     </style>
 </head>
 <body>
-    <!-- Ваши изображения -->
+    <!-- Изображение (перенес из head в body) -->
     <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
     <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 248px; width: 1000px; height: auto;">
     
-    <!-- Плеер через iframe -->
-    <div class="player-container">
-        <iframe src="https://widgets.cloud.caster.fm/player/?publicToken=7cb75f5e-9e0a-4716-b67f-7e4940ba6987&theme=light&color=e81e4d&desktop=true" 
-                allow="autoplay; encrypted-media" 
-                allowfullscreen>
-        </iframe>
-    </div>
-    
-    <!-- Альтернативный вариант, если iframe не сработает -->
-    <!-- 
+    <!-- Плеер -->
     <div class="player-container">
         <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
             <a href="https://www.caster.fm">Shoutcast Hosting</a> 
@@ -54,6 +36,5 @@
         </div>
         <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
-    -->
 </body>
 </html>
