@@ -18,7 +18,7 @@
         }
     </style>
     
-    <!-- ИСПРАВЛЕНО: JavaScript теперь внутри тега <script> -->
+    <!-- ИСПРАВЛЕННЫЙ JavaScript -->
     <script>
         // Функция для перехода на мобильную версию
         function switchToMobile() {
@@ -27,18 +27,18 @@
             window.location.href = "https://radiodjboga.online"; 
         }
         
-        // Функция для перехода на полную версию
+        // Функция для перехода на полную версию (ТОЛЬКО ОДНА)
         function switchToFull() {
             localStorage.setItem('version', 'full');
-            // ЗАМЕНИТЕ НА ВАШ АДРЕС:
-            window.location.href = "https://radiodjboga.online";
+            // ЗАМЕНИТЕ НА ВАШ АДРЕС ПК-ВЕРСИИ:
+            window.location.href = "https://www.radiodjboga.online";
         }
         
-        // ИСПРАВЛЕНО: Условие для автоматического редиректа теперь выполняется
-        function switchToFull() {
-    localStorage.setItem('version', 'full');
-    window.location.href = "https://www.radiodjboga.online"; // Или другой адрес ПК-версии
-}
+        // АВТОМАТИЧЕСКИЙ РЕДИРЕКТ (ВОССТАНОВЛЕН)
+        if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
+            // ЗАМЕНИТЕ НА ВАШ МОБИЛЬНЫЙ АДРЕС:
+            window.location.href = "https://mobile.radiodjboga.online";
+        }
     </script>
 </head>
 <body>
@@ -58,6 +58,3 @@
     </div>
 </body>
 </html>
-
-
-
