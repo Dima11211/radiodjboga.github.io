@@ -17,8 +17,19 @@
         </a>
     </div>
 </body>
-    <title>Плеер</title>
+
     <style>
+        /* Пример: Кнопки на мобильном становятся на всю ширину */
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+        font-size: 18px;
+        padding: 15px;
+    }
+    .container {
+        flex-direction: column; /* Элементы идут друг за другом */
+    }
+}
     .version-switcher {
     display: flex;
     gap: 10px;
@@ -73,6 +84,7 @@
     </div>
 </body>
 </html>
+
 
 
 
