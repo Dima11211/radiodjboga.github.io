@@ -4,59 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.0">
     <title>Плеер</title>
+    // Функция для перехода на мобильную версию
+function switchToMobile() {
+    localStorage.setItem('version', 'mobile');
+    // Если у вас мобильная версия на поддомене m.
+    window.location.href = "https://m.yoursite.com"; 
+    // Или просто добавьте параметр к текущему адресу
+    // window.location.search = "?view=mobile";
+}
+
+// Функция для перехода на полную версию
+function switchToFull() {
+    localStorage.setItem('version', 'full');
+    window.location.href = "https://yoursite.com";
+}
+    if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
+    window.location.href = "https://m.yoursite.com";
+}
 </head>
 <body>
-    <div class="version-switcher">
-        <!-- Кнопка полной версии (иконка монитора) -->
-        <a href="?view=full" class="btn-version" title="Полная версия">
-            <span class="icon-desktop">💻</span>
-        </a>
-        <!-- Кнопка мобильной версии (иконка телефона) -->
-        <a href="?view=mobile" class="btn-version" title="Мобильная версия">
-            <span class="icon-mobile"> 📱</span>
-        </a>
-    </div>
+
 </body>
 
     <style>
-        /* Пример: Кнопки на мобильном становятся на всю ширину */
-@media (max-width: 600px) {
-    .button {
-        width: 100%;
-        font-size: 18px;
-        padding: 15px;
-        z-index: 1000;
-    }
-    .container {
-        flex-direction: column; /* Элементы идут друг за другом */
-    }
-}
-    .version-switcher {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    padding: 10px;
-}
-
-    .btn-version {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 45px; /* Квадратный размер */
-        height: 45px;
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        border-radius: 8px; /* Скругление углов */
-        text-decoration: none;
-        font-size: 24px; /* Размер эмодзи/иконки */
-        color: #333;
-        transition: background-color 0.3s;
-        z-index: 1000;
-    }
-
-    .btn-version:hover {
-        background-color: #ddd;
-    }
         /* Контейнер для плеера с возможностью перемещения */
         .player-container {
             position: absolute;
@@ -85,6 +55,7 @@
     </div>
 </body>
 </html>
+
 
 
 
