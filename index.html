@@ -35,10 +35,10 @@
         }
         
         // ИСПРАВЛЕНО: Условие для автоматического редиректа теперь выполняется
-        if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
-            // ЗАМЕНИТЕ НА ВАШ МОБИЛЬНЫЙ АДРЕС:
-            window.location.href = "https://mobile.radiodjboga.online";
-        }
+        function switchToFull() {
+    localStorage.setItem('version', 'full');
+    window.location.href = "https://www.radiodjboga.online"; // Или другой адрес ПК-версии
+}
     </script>
 </head>
 <body>
@@ -58,5 +58,6 @@
     </div>
 </body>
 </html>
+
 
 
