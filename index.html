@@ -115,7 +115,7 @@
         // --- Функции для ручного переключения (ваши, немного доработанные) ---
         function switchToMobile() {
             localStorage.setItem('version', 'mobile');
-            // !!! ЗАМЕНИТЕ НА РЕАЛЬНЫЙ АДРЕС ВАШЕЙ МОБИЛЬНОЙ ВЕРСИИ !!!
+            // !!! ИСПРАВЛЕНО: добавлен протокол https:// для мобильного домена !!!
             window.location.href = "https://mobile.radiodjboga.online";
         }
 
@@ -136,7 +136,7 @@
                 if (currentVersion !== 'mobile') {
                     console.log('Авторедирект на мобильную версию');
                     localStorage.setItem('version', 'mobile'); // Ставим флаг
-                    // !!! ЗАМЕНИТЕ НА АДРЕС МОБИЛЬНОЙ ВЕРСИИ !!!
+                    // !!! ИСПРАВЛЕНО: добавлен протокол https:// для мобильного домена !!!
                     window.location.href = "https://mobile.radiodjboga.online";
                 }
             } else { // Если ширина больше 768px (ПК)
