@@ -20,6 +20,12 @@
         </div>
         <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
+    var btn = document.querySelector('button');
+
+btn.addEventListener('click', function() {
+  var viewport = document.querySelector("meta[name=viewport]");
+  viewport.setAttribute('content', 'width=1200');
+});
 </body>
 </html>
     <title>Плеер</title>
@@ -69,6 +75,7 @@
     </div>
 </body>
 </html>
+
 
 
 
