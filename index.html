@@ -2,158 +2,68 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Универсальный viewport для всех устройств -->
+    <!-- ЕДИНСТВЕННОЕ ДОБАВЛЕНИЕ: viewport для адаптации -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адаптивный плеер</title>
+    <title>Плеер</title>
     <style>
         body, html {
             padding: 0;
             margin: 0;
             min-height: 100vh;
-            background: #f0f0f0; /* Для наглядности */
         }
-
-        /* ======= СТИЛИ ДЛЯ ВСЕХ УСТРОЙСТВ ======= */
+        
+        /* Контейнер для плеера с возможностью перемещения */
         .player-container {
             position: absolute;
-            z-index: 1000;
-            /* Размеры и положение по умолчанию (для ПК) */
-            top: -10px;
-            left: -12px;
-            width: 700px;      /* Ширина как у вас */
-            height: 700px;      /* Твоя желаемая высота */
+            top: -10px;  /* Измените это значение */
+            left: -12px; /* Измените это значение */
+            width: 700px;/* Автоматическая ширина */  
+            height: 500px;
+            z-index: 1000; /* Чтобы плеер был поверх других элементов */
         }
-
-        /* Стили для iframe, который создаст скрипт */
-        .player-container iframe {
-            width: 100% !important;
-            height: 700px !important; /* Фиксируем нужную высоту */
-            border: none;
-            border-radius: 10px; /* Немного скруглим */
-        }
-
-        /* Переопределяем встроенные стили скрипта, которые ломают высоту */
-        .player-container .cstrEmbed,
-        .player-container [style*="height"] {
-            height: 700px !important;
-            min-height: 700px !important;
-            max-height: 700px !important;
-            display: block; /* Убираем лишние отступы */
-        }
-
-        /* Стили для изображений (можно оставить как есть) */
-        .desktop-image {
-            position: absolute;
-            left: 680px;
-            top: 0px;
-            width: 1000px;
-            height: auto;
-            z-index: 1;
-        }
-
-        /* Стили для изображений (можно оставить как есть) */
-        .bottom-image {
-            position: absolute;
-            left: 680px;
-            top: 1000px;
-            width: 1000px;
-            height: 248px;
-            z-index: 1;
-        }
-
-        /* ======= АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ======= */
+        
+        /* === ДОБАВЛЕННЫЙ МЕДИА-ЗАПРОС ТОЛЬКО ДЛЯ ТЕЛЕФОНОВ === */
         @media screen and (max-width: 768px) {
-            /* Полностью меняем позиционирование плеера */
             .player-container {
-                top: 50%;              /* Центрируем по вертикали */
-                left: 50%;              /* Центрируем по горизонтали */
-                transform: translate(-50%, -50%);
-                width: 90vw;            /* 90% ширины экрана */
-                height: 90vw;            /* Квадрат, чтобы не ломало */
-                max-width: 400px;        /* Максимальный размер */
-                max-height: 400px;
+                width: 100%;        /* На телефоне на всю ширину */
+                height: auto;        /* Автовысота */
+                left: 0;             /* Прижать к левому краю */
+                top: 10px;           /* Небольшой отступ сверху */
             }
-
-            /* Задаем высоту для iframe на телефоне */
-            .player-container iframe {
-                height: 90vw !important;
-                max-height: 400px !important;
+            
+            /* Изображения тоже нужно уменьшить на телефоне */
+            img[style*="position: absolute"] {
+                max-width: 100%;     /* Не шире экрана */
+                height: auto;        /* Пропорциональная высота */
+                position: relative;  /* Убираем абсолютное позиционирование */
+                left: 0 !important;  /* Сбрасываем позицию */
+                display: block;      /* Блочные элементы */
+                margin: 10px auto;   /* Центрируем */
             }
-
-            /* Прячем лишние изображения, если мешают */
-            .desktop-image,
-            .bottom-image {
-                display: none;
-            }
-
-            /* Добавляем простой фон */
-            body {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            /* Специально для первого изображения (правый верхний угол) */
+            img[src*="20260225_2221_image.png"] {
+                display: none;       /* Прячем на телефоне, если мешает */
             }
         }
-
-        /* Для очень маленьких экранов */
-        @media screen and (max-width: 480px) {
-            .player-container {
-                width: 85vw;
-                height: 85vw;
-            }
-        }
-
-        /* Для планшетов */
-        @media screen and (min-width: 769px) and (max-width: 1024px) {
-            .player-container {
-                width: 600px;
-                height: 600px;
-                top: 50px;
-                left: 50px;
-            }
-        }
+        /* === КОНЕЦ ДОБАВЛЕННОГО МЕДИА-ЗАПРОСА === */
+        
     </style>
 </head>
 <body>
-
-    <!-- Изображения (оставлены без изменений) -->
-    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" class="desktop-image" style="left: 1680px; top: 0;">
-    <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" class="desktop-image" style="left: 680px; top: 0;">
-    <img src="img/i1.jpg" alt="RADIO DJ BOGA" class="bottom-image">
-
-    <!-- Плеер (твой код) -->
+    <!-- Изображения (ВСЁ ОСТАЛОСЬ КАК У ВАС) -->
+    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
+    <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
+    <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
+    
+    <!-- Плеер (ВСЁ ОСТАЛОСЬ КАК У ВАС) -->
     <div class="player-container">
-        <div data-type="newStreamPlayer"
-             data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987"
-             data-theme="light"
-             data-color="e81e4d"
-             data-channelId=""
-             data-rendered="false"
-             class="cstrEmbed">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
+        <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a> 
+            <a href="https://www.caster.fm">Stream Hosting</a> 
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
         <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
-
-    <script>
-        // Дополнительная защита: если скрипт упорно меняет высоту,
-        // можно запустить таймер, который будет возвращать нужную высоту.
-        // Раскомментируй, если плеер всё ещё сбрасывает размер.
-        /*
-        function fixPlayerHeight() {
-            const iframe = document.querySelector('.player-container iframe');
-            const container = document.querySelector('.player-container');
-            if (iframe && container) {
-                const desiredHeight = window.innerWidth <= 768 ? '400px' : '700px';
-                iframe.style.height = desiredHeight;
-                iframe.style.minHeight = desiredHeight;
-                iframe.style.maxHeight = desiredHeight;
-            }
-        }
-        // Запускаем фикс после загрузки страницы и каждую секунду (на всякий случай)
-        window.addEventListener('load', fixPlayerHeight);
-        setInterval(fixPlayerHeight, 1000);
-        */
-    </script>
-
 </body>
 </html>
