@@ -7,44 +7,43 @@
 </head>
 <body>
     <div class="version-switcher">
-        <a href="?view=mobile" class="switch-btn mobile-icon" title="Мобильная версия">
-            <i class="fas fa-mobile-alt"></i>i>
+        <!-- Кнопка полной версии (иконка монитора) -->
+        <a href="?view=full" class="btn-version" title="Полная версия">
+            <span class="icon-desktop">💻</span>
         </a>
-        <a href="?view=full" class="switch-btn desktop-icon" title="Полная версия">
-            <i class="fas fa-desktop"></i>
+        <!-- Кнопка мобильной версии (иконка телефона) -->
+        <a href="?view=mobile" class="btn-version" title="Мобильная версия">
+            <span class="icon-mobile">📱</span>
         </a>
     </div>
 </body>
     <title>Плеер</title>
     <style>
-        .version-switcher {
-            position: fixed;
-            bottom: 20px; /* Позиция от низа */
-            right: 20px;  /* Позиция от края */
-            display: flex;
-            flex-direction: column; /* Вертикально, можно column заменить на row для горизонтального */
-            gap: 10px;    /* Расстояние между кнопками */
-            z-index: 9999; /* Поверх всех элементов */
-        }
+    .version-switcher {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+}
 
-        .switch-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;  /* Размер кнопки */
-            height: 50px;
-            background-color: #333; /* Цвет фона */
-            color: #fff;  /* Цвет иконки */
-            border-radius: 50%; /* Круглая кнопка */
-            text-decoration: none;
-            font-size: 24px; /* Размер иконки */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: background-color 0.3s;
-        }
+    .btn-version {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px; /* Квадратный размер */
+        height: 45px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 8px; /* Скругление углов */
+        text-decoration: none;
+        font-size: 24px; /* Размер эмодзи/иконки */
+        color: #333;
+        transition: background-color 0.3s;
+    }
 
-        .switch-btn:hover {
-            background-color: #555;
-        }
+    .btn-version:hover {
+        background-color: #ddd;
+    }
         /* Контейнер для плеера с возможностью перемещения */
         .player-container {
             position: absolute;
@@ -73,6 +72,7 @@
     </div>
 </body>
 </html>
+
 
 
 
