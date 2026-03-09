@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- ЕДИНСТВЕННОЕ ДОБАВЛЕНИЕ: viewport для адаптации -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Плеер</title>
     <style>
@@ -21,42 +20,15 @@
             height: 500px;
             z-index: 1000; /* Чтобы плеер был поверх других элементов */
         }
-        
-        /* === ДОБАВЛЕННЫЙ МЕДИА-ЗАПРОС ТОЛЬКО ДЛЯ ТЕЛЕФОНОВ === */
-        @media screen and (max-width: 768px) {
-            .player-container {
-                width: 100%;        /* На телефоне на всю ширину */
-                height: auto;        /* Автовысота */
-                left: 0;             /* Прижать к левому краю */
-                top: 10px;           /* Небольшой отступ сверху */
-            }
-            
-            /* Изображения тоже нужно уменьшить на телефоне */
-            img[style*="position: absolute"] {
-                max-width: 100%;     /* Не шире экрана */
-                height: auto;        /* Пропорциональная высота */
-                position: relative;  /* Убираем абсолютное позиционирование */
-                left: 0 !important;  /* Сбрасываем позицию */
-                display: block;      /* Блочные элементы */
-                margin: 10px auto;   /* Центрируем */
-            }
-            
-            /* Специально для первого изображения (правый верхний угол) */
-            img[src*="20260225_2221_image.png"] {
-                display: none;       /* Прячем на телефоне, если мешает */
-            }
-        }
-        /* === КОНЕЦ ДОБАВЛЕННОГО МЕДИА-ЗАПРОСА === */
-        
     </style>
 </head>
 <body>
-    <!-- Изображения (ВСЁ ОСТАЛОСЬ КАК У ВАС) -->
+    <!-- Изображение (перенес из head в body) -->
     <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
     <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
     <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
     
-    <!-- Плеер (ВСЁ ОСТАЛОСЬ КАК У ВАС) -->
+    <!-- Плеер -->
     <div class="player-container">
         <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
             <a href="https://www.caster.fm">Shoutcast Hosting</a> 
