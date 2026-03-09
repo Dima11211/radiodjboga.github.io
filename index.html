@@ -77,14 +77,6 @@
                 font-size: 14px;
             }
         }
-
-        /* Стили для изображений (без изменений) */
-        .desktop-image {
-            position: absolute;
-            left: 1675px;
-            top: 0;
-        }
-        /* Добавьте свои стили для изображений, если нужно */
     </style>
 </head>
 <body>
@@ -104,80 +96,65 @@
         <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
 
-    <!-- === НОВЫЙ БЛОК: Кнопки переключения версий === -->
+    <!-- Кнопки переключения версий -->
     <div class="version-switcher">
         <button id="btnMobile" class="version-btn" onclick="switchToMobile()">📱 Мобильная</button>
         <button id="btnFull" class="version-btn" onclick="switchToFull()">💻 Полная</button>
     </div>
 
-    <!-- === НОВЫЙ СКРИПТ: Логика переключения === -->
     <script>
-        // --- Функции для ручного переключения (ваши, немного доработанные) ---
+        // Функции для ручного переключения
         function switchToMobile() {
             localStorage.setItem('version', 'mobile');
-            // !!! ИСПРАВЛЕНО: добавлен протокол https:// для мобильного домена !!!
-            window.location.href = "https://mobile.radiodjboga.online";
+            // ИСПРАВЛЕНО: Перенаправляем на основной сайт с параметром для мобильной версии
+            window.location.href = "https://radiodjboga.online?view=mobile";
         }
 
         function switchToFull() {
             localStorage.setItem('version', 'full');
-            // !!! ЗАМЕНИТЕ НА РЕАЛЬНЫЙ АДРЕС ВАШЕЙ ПОЛНОЙ ВЕРСИИ !!!
-            window.location.href = "https://www.radiodjboga.online";
+            // ИСПРАВЛЕНО: Перенаправляем на основной сайт с параметром для полной версии
+            window.location.href = "https://radiodjboga.online?view=full";
         }
 
-        // --- НОВОЕ: Автоматическое переключение при изменении размера окна ---
-        function checkWindowSizeAndRedirect() {
-            // Не выполняем редирект, если мы уже на нужной версии (проверяем localStorage)
-            const currentVersion = localStorage.getItem('version');
+        // Функция для определения мобильного устройства
+        function isMobileDevice() {
+            return window.innerWidth <= 768 || 
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
 
-            // Если ширине экрана меньше или равно 768px (мобильное устройство)
-            if (window.innerWidth <= 768) {
-                // И если мы не в мобильной версии (или флаг не установлен)
-                if (currentVersion !== 'mobile') {
-                    console.log('Авторедирект на мобильную версию');
-                    localStorage.setItem('version', 'mobile'); // Ставим флаг
-                    // !!! ИСПРАВЛЕНО: добавлен протокол https:// для мобильного домена !!!
-                    window.location.href = "https://mobile.radiodjboga.online";
-                }
-            } else { // Если ширина больше 768px (ПК)
-                // И если мы не в полной версии
-                if (currentVersion !== 'full') {
-                    console.log('Авторедирект на полную версию');
-                    localStorage.setItem('version', 'full'); // Ставим флаг
-                    // !!! ЗАМЕНИТЕ НА АДРЕС ПОЛНОЙ ВЕРСИИ !!!
-                    window.location.href = "https://www.radiodjboga.online";
-                }
+        // Автоматическое переключение при загрузке и изменении размера окна
+        function checkAndRedirect() {
+            // Получаем сохраненную версию
+            const savedVersion = localStorage.getItem('version');
+            // Получаем параметры URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewParam = urlParams.get('view');
+            
+            // Определяем, нужно ли показывать мобильную версию
+            const shouldShowMobile = isMobileDevice() && savedVersion !== 'full' && viewParam !== 'full';
+            
+            // Если нужно показать мобильную версию И мы сейчас не в мобильной версии
+            if (shouldShowMobile && viewParam !== 'mobile') {
+                window.location.href = "https://radiodjboga.online?view=mobile";
             }
         }
 
-        // --- Запускаем проверку при загрузке страницы ---
-        checkWindowSizeAndRedirect();
+        // Запускаем проверку при загрузке
+        checkAndRedirect();
 
-        // --- И при изменении размера окна (например, если пользователь развернул окно на ПК) ---
+        // Следим за изменением размера окна
         window.addEventListener('resize', function() {
-            // Используем "debounce", чтобы функция не срабатывала слишком часто
-            clearTimeout(window.resizedFinished);
-            window.resizedFinished = setTimeout(() => {
-                checkWindowSizeAndRedirect();
-            }, 250); // Подождем 250мс после окончания изменения размера
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(checkAndRedirect, 250);
         });
 
-        // Дополнительно: проверяем ориентацию устройства (полезно для планшетов)
+        // Следим за изменением ориентации
         window.addEventListener('orientationchange', function() {
-            setTimeout(checkWindowSizeAndRedirect, 200);
+            setTimeout(checkAndRedirect, 200);
         });
 
-        console.log('Система переключения версий активирована. Текущая версия:', localStorage.getItem('version') || 'не установлена');
+        console.log('Система переключения версий активирована');
     </script>
-
-    <!-- Небольшое пояснение (можно удалить) -->
-    <!--
-        ⚠️ ВАЖНО: Замените адреса https://mobile.radiodjboga.online и https://www.radiodjboga.online
-        на реальные адреса ваших версий сайта.
-        Если у вас пока нет отдельных адресов, этот код будет перенаправлять сам на себя,
-        что вызовет бесконечный редирект. Временно закомментируйте строки с window.location.href
-        внутри функций и в checkWindowSizeAndRedirect для тестирования кнопок и авторедиректа.
-    -->
 
 </body>
 </html>
