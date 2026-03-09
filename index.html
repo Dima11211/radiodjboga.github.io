@@ -2,49 +2,57 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <!-- ИСПРАВЛЕНО: initial-scale=1.0 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Плеер</title>
-    // Функция для перехода на мобильную версию
-function switchToMobile() {
-    localStorage.setItem('version', 'mobile');
-    // Если у вас мобильная версия на поддомене m.
-    window.location.href = "https://m.yoursite.com"; 
-    // Или просто добавьте параметр к текущему адресу
-    // window.location.search = "?view=mobile";
-}
-
-// Функция для перехода на полную версию
-function switchToFull() {
-    localStorage.setItem('version', 'full');
-    window.location.href = "https://yoursite.com";
-}
-    if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
-    window.location.href = "https://m.yoursite.com";
-}
-</head>
-<body>
-
-</body>
-
+    
     <style>
-        /* Контейнер для плеера с возможностью перемещения */
+        /* Стили для контейнера плеера */
         .player-container {
             position: absolute;
-            top: 1000px;  /* Измените это значение */
-            left: -12px; /* Измените это значение */
-            width: 700px;/* Автоматическая ширина */  
+            top: 1000px;
+            left: -12px;
+            width: 700px;
             height: 500px;
-            z-index: 1000; /* Чтобы плеер был поверх других элементов */
+            z-index: 1000;
         }
     </style>
+    
+    <!-- ИСПРАВЛЕНО: JavaScript теперь внутри тега <script> -->
+    <script>
+        // Функция для перехода на мобильную версию
+        function switchToMobile() {
+            localStorage.setItem('version', 'mobile');
+            // ЗАМЕНИТЕ НА ВАШ АДРЕС: 
+            window.location.href = "https://m.yoursite.com";
+        }
+        
+        // Функция для перехода на полную версию
+        function switchToFull() {
+            localStorage.setItem('version', 'full');
+            // ЗАМЕНИТЕ НА ВАШ АДРЕС:
+            window.location.href = "https://yoursite.com";
+        }
+        
+        // Условие для автоматического редиректа
+        if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
+            // ЗАМЕНИТЕ НА ВАШ МОБИЛЬНЫЙ АДРЕС:
+            window.location.href = "https://m.yoursite.com";
+        }
+    </script>
 </head>
 <body>
-    <!-- Изображение (перенес из head в body) -->
+    <!-- Изображения -->
     <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
     <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
     <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
     
-<div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed"><a href="https://www.caster.fm">Shoutcast Hosting</a> <a href="https://www.caster.fm">Stream Hosting</a> <a href="https://www.caster.fm">Radio Server Hosting</a></div><script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+    <!-- Плеер -->
+    <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a> 
+        <a href="https://www.caster.fm">Stream Hosting</a> 
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
+    </div>
+    <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 </body>
 </html>
-
