@@ -2,12 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- ИСПРАВЛЕНО: initial-scale=1.0 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Плеер</title>
-    
+    <title>Плеер RADIO DJ BOGA</title>
+
     <style>
-        /* Стили для контейнера плеера */
+        /* Стили для контейнера плеера (как у вас) */
         .player-container {
             position: absolute;
             top: 1000px;
@@ -16,43 +15,207 @@
             height: 500px;
             z-index: 1000;
         }
+
+        /* Стили для кнопок переключения */
+        .version-switcher {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 10000;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 20px;
+            border-radius: 60px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .version-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        #btnMobile {
+            background: #e81e4d;
+        }
+
+        #btnFull {
+            background: #4CAF50;
+        }
+
+        .version-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .version-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Адаптация кнопок на маленьких экранах */
+        @media (max-width: 600px) {
+            .version-switcher {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                gap: 10px;
+                flex-direction: column;
+                border-radius: 30px;
+            }
+            .version-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
     </style>
-    
-    <!-- ИСПРАВЛЕНО: JavaScript теперь внутри тега <script> -->
-    <script>
-        // Функция для перехода на мобильную версию
-        function switchToMobile() {
-            localStorage.setItem('version', 'mobile');
-            // ЗАМЕНИТЕ НА ВАШ АДРЕС: 
-            window.location.href = "https://m.yoursite.com";
-        }
-        
-        // Функция для перехода на полную версию
-        function switchToFull() {
-            localStorage.setItem('version', 'full');
-            // ЗАМЕНИТЕ НА ВАШ АДРЕС:
-            window.location.href = "https://yoursite.com";
-        }
-        
-        // Условие для автоматического редиректа
-        if (window.innerWidth <= 768 && localStorage.getItem('version') !== 'full') {
-            // ЗАМЕНИТЕ НА ВАШ МОБИЛЬНЫЙ АДРЕС:
-            window.location.href = "https://m.yoursite.com";
-        }
-    </script>
 </head>
 <body>
-    <!-- Изображения -->
-    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1680px; top: 0;">
+
+    <!-- ВАШИ ИЗОБРАЖЕНИЯ (без изменений) -->
+    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1675px; top: 0;">
     <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
     <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
-    
-    <!-- Плеер -->
-    <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
-        <a href="https://www.caster.fm">Shoutcast Hosting</a> 
-        <a href="https://www.caster.fm">Stream Hosting</a> 
-        <a href="https://www.caster.fm">Radio Server Hosting</a>
+
+    <!-- ВАШ ПЛЕЕР (без изменений) -->
+    <div class="player-container">
+        <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+        </div>
+        <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
-    <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+
+    <!-- Кнопки переключения версий -->
+    <div class="version-switcher">
+        <button id="btnMobile" class="version-btn" onclick="switchToMobile()">📱 Мобильная</button>
+        <button id="btnFull" class="version-btn" onclick="switchToFull()">💻 Полная</button>
+    </div>
+
+    <script>
+        // ========================================
+        // НАСТРОЙКА ДОМЕНОВ (ТОЛЬКО ЭТИ СТРОКИ МЕНЯТЬ)
+        // ========================================
+        const MAIN_DOMAIN = "https://radiodjboga.online";        // Основной домен (без www)
+        const MOBILE_DOMAIN = "https://mobile.radiodjboga.online"; // Мобильный поддомен с HTTPS
+        
+        // ========================================
+        // Функции для ручного переключения
+        // ========================================
+        function switchToMobile() {
+            localStorage.setItem('version', 'mobile');
+            window.location.href = MOBILE_DOMAIN; // Редирект на https://mobile.radiodjboga.online
+        }
+
+        function switchToFull() {
+            localStorage.setItem('version', 'full');
+            window.location.href = MAIN_DOMAIN; // Редирект на https://radiodjboga.online
+        }
+
+        // ========================================
+        // Функция определения мобильного устройства
+        // ========================================
+        function isMobileDevice() {
+            // Проверка ширины экрана ИЛИ мобильного user-agent
+            return window.innerWidth <= 768 || 
+                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // ========================================
+        // Автоматический редирект
+        // ========================================
+        function checkAndRedirect() {
+            // Текущий домен
+            const currentDomain = window.location.hostname;
+            // Сохраненная версия в localStorage
+            const savedVersion = localStorage.getItem('version');
+            
+            // Определяем, на каком мы домене сейчас
+            const isOnMainDomain = currentDomain === 'radiodjboga.online';
+            const isOnMobileDomain = currentDomain === 'mobile.radiodjboga.online';
+            
+            // === СЛУЧАЙ 1: Мы на мобильном домене ===
+            if (isOnMobileDomain) {
+                // Если пользователь хочет полную версию (через кнопку или localStorage)
+                if (savedVersion === 'full') {
+                    window.location.href = MAIN_DOMAIN;
+                    return;
+                }
+                // Иначе остаемся на мобильном домене
+                return;
+            }
+            
+            // === СЛУЧАЙ 2: Мы на основном домене ===
+            if (isOnMainDomain) {
+                // Если пользователь хочет мобильную версию И у него мобильное устройство
+                if (savedVersion === 'mobile' || (isMobileDevice() && savedVersion !== 'full')) {
+                    window.location.href = MOBILE_DOMAIN;
+                    return;
+                }
+                // Иначе остаемся на основном домене
+                return;
+            }
+            
+            // === СЛУЧАЙ 3: Мы на каком-то другом домене (например, localhost) ===
+            // Ничего не делаем
+        }
+
+        // ========================================
+        // Запуск проверок
+        // ========================================
+        
+        // Запускаем при загрузке страницы
+        checkAndRedirect();
+        
+        // Следим за изменением размера окна
+        window.addEventListener('resize', function() {
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(checkAndRedirect, 250);
+        });
+        
+        // Следим за изменением ориентации (для планшетов)
+        window.addEventListener('orientationchange', function() {
+            setTimeout(checkAndRedirect, 200);
+        });
+
+        // Для отладки (можно посмотреть в консоли браузера F12)
+        console.log('✅ Система переключения версий активирована');
+        console.log('📌 Текущий домен:', window.location.hostname);
+        console.log('📱 Мобильное устройство:', isMobileDevice() ? 'Да' : 'Нет');
+        console.log('💾 Сохраненная версия:', localStorage.getItem('version') || 'не выбрана');
+    </script>
+
+    <!-- ======================================== -->
+    <!-- ИНСТРУКЦИЯ (можно удалить после настройки) -->
+    <!-- ======================================== -->
+    <!--
+    ✅ ГОТОВО! Теперь:
+    
+    1. Основной сайт: https://radiodjboga.online
+    2. Мобильный сайт: https://mobile.radiodjboga.online (должен существовать!)
+    
+    ⚠️ ЧТО ВАЖНО СДЕЛАТЬ:
+    
+    • Убедитесь, что домен mobile.radiodjboga.online существует и на нем настроен HTTPS
+    • Если домен mobile.radiodjboga.online еще не создан - создайте его в панели хостинга
+    • На мобильном домене должен быть такой же сайт (можно скопировать эти файлы)
+    
+    🔄 КАК РАБОТАЕТ:
+    
+    • На телефоне - автоматически кидает на mobile.radiodjboga.online
+    • Кнопка "Мобильная" - кидает на mobile.radiodjboga.online
+    • Кнопка "Полная" - кидает на radiodjboga.online
+    • Запоминает выбор через localStorage
+    -->
 </body>
 </html>
