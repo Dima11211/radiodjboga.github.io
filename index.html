@@ -1,4 +1,4 @@
-используй этот код <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -104,7 +104,7 @@
 
     <script>
         // ========================================
-        // НАСТРОЙКА ДОМЕНОВ (ТОЛЬКО ЭТИ СТРОКИ МЕНЯТЬ)
+        // НАСТРОЙКА ДОМЕНОВ (без www)
         // ========================================
         const MAIN_DOMAIN = "https://radiodjboga.online";        // Основной домен (без www)
         const MOBILE_DOMAIN = "https://mobile.radiodjboga.online"; // Мобильный поддомен с HTTPS
@@ -114,19 +114,18 @@
         // ========================================
         function switchToMobile() {
             localStorage.setItem('version', 'mobile');
-            window.location.href = MOBILE_DOMAIN; // Редирект на https://mobile.radiodjboga.online
+            window.location.href = MOBILE_DOMAIN; // Редирект на мобильную версию
         }
 
         function switchToFull() {
             localStorage.setItem('version', 'full');
-            window.location.href = MAIN_DOMAIN; // Редирект на https://radiodjboga.online
+            window.location.href = MAIN_DOMAIN; // Редирект на основную версию
         }
 
         // ========================================
         // Функция определения мобильного устройства
         // ========================================
         function isMobileDevice() {
-            // Проверка ширины экрана ИЛИ мобильного user-agent
             return window.innerWidth <= 768 || 
                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
@@ -135,87 +134,50 @@
         // Автоматический редирект
         // ========================================
         function checkAndRedirect() {
-            // Текущий домен
             const currentDomain = window.location.hostname;
-            // Сохраненная версия в localStorage
             const savedVersion = localStorage.getItem('version');
             
-            // Определяем, на каком мы домене сейчас
+            // Проверяем домены (без www)
             const isOnMainDomain = currentDomain === 'radiodjboga.online';
             const isOnMobileDomain = currentDomain === 'mobile.radiodjboga.online';
             
-            // === СЛУЧАЙ 1: Мы на мобильном домене ===
+            // Если на мобильном домене
             if (isOnMobileDomain) {
-                // Если пользователь хочет полную версию (через кнопку или localStorage)
                 if (savedVersion === 'full') {
                     window.location.href = MAIN_DOMAIN;
                     return;
                 }
-                // Иначе остаемся на мобильном домене
                 return;
             }
             
-            // === СЛУЧАЙ 2: Мы на основном домене ===
+            // Если на основном домене
             if (isOnMainDomain) {
-                // Если пользователь хочет мобильную версию И у него мобильное устройство
                 if (savedVersion === 'mobile' || (isMobileDevice() && savedVersion !== 'full')) {
                     window.location.href = MOBILE_DOMAIN;
                     return;
                 }
-                // Иначе остаемся на основном домене
                 return;
             }
-            
-            // === СЛУЧАЙ 3: Мы на каком-то другом домене (например, localhost) ===
-            // Ничего не делаем
         }
 
         // ========================================
         // Запуск проверок
         // ========================================
-        
-        // Запускаем при загрузке страницы
         checkAndRedirect();
         
-        // Следим за изменением размера окна
         window.addEventListener('resize', function() {
             clearTimeout(window.resizeTimer);
             window.resizeTimer = setTimeout(checkAndRedirect, 250);
         });
         
-        // Следим за изменением ориентации (для планшетов)
         window.addEventListener('orientationchange', function() {
             setTimeout(checkAndRedirect, 200);
         });
 
-        // Для отладки (можно посмотреть в консоли браузера F12)
         console.log('✅ Система переключения версий активирована');
         console.log('📌 Текущий домен:', window.location.hostname);
         console.log('📱 Мобильное устройство:', isMobileDevice() ? 'Да' : 'Нет');
         console.log('💾 Сохраненная версия:', localStorage.getItem('version') || 'не выбрана');
     </script>
-
-    <!-- ======================================== -->
-    <!-- ИНСТРУКЦИЯ (можно удалить после настройки) -->
-    <!-- ======================================== -->
-    <!--
-    ✅ ГОТОВО! Теперь:
-    
-    1. Основной сайт: https://radiodjboga.online
-    2. Мобильный сайт: https://mobile.radiodjboga.online (должен существовать!)
-    
-    ⚠️ ЧТО ВАЖНО СДЕЛАТЬ:
-    
-    • Убедитесь, что домен mobile.radiodjboga.online существует и на нем настроен HTTPS
-    • Если домен mobile.radiodjboga.online еще не создан - создайте его в панели хостинга
-    • На мобильном домене должен быть такой же сайт (можно скопировать эти файлы)
-    
-    🔄 КАК РАБОТАЕТ:
-    
-    • На телефоне - автоматически кидает на mobile.radiodjboga.online
-    • Кнопка "Мобильная" - кидает на mobile.radiodjboga.online
-    • Кнопка "Полная" - кидает на radiodjboga.online
-    • Запоминает выбор через localStorage
-    -->
 </body>
 </html>
