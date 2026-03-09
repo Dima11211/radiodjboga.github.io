@@ -6,8 +6,45 @@
     <title>Плеер</title>
 </head>
 <body>
+    <div class="version-switcher">
+        <a href="?view=mobile" class="switch-btn mobile-icon" title="Мобильная версия">
+            <i class="fas fa-mobile-alt"></i>i>
+        </a>
+        <a href="?view=full" class="switch-btn desktop-icon" title="Полная версия">
+            <i class="fas fa-desktop"></i>
+        </a>
+    </div>
+</body>
     <title>Плеер</title>
     <style>
+        .version-switcher {
+            position: fixed;
+            bottom: 20px; /* Позиция от низа */
+            right: 20px;  /* Позиция от края */
+            display: flex;
+            flex-direction: column; /* Вертикально, можно column заменить на row для горизонтального */
+            gap: 10px;    /* Расстояние между кнопками */
+            z-index: 9999; /* Поверх всех элементов */
+        }
+
+        .switch-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;  /* Размер кнопки */
+            height: 50px;
+            background-color: #333; /* Цвет фона */
+            color: #fff;  /* Цвет иконки */
+            border-radius: 50%; /* Круглая кнопка */
+            text-decoration: none;
+            font-size: 24px; /* Размер иконки */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s;
+        }
+
+        .switch-btn:hover {
+            background-color: #555;
+        }
         /* Контейнер для плеера с возможностью перемещения */
         .player-container {
             position: absolute;
@@ -36,6 +73,7 @@
     </div>
 </body>
 </html>
+
 
 
 
