@@ -2,12 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- ИСПРАВЛЕНО: initial-scale=1.0 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Плеер</title>
-    
+    <title>Плеер RADIO DJ BOGA</title>
+
     <style>
-        /* Стили для контейнера плеера */
+        /* Стили для контейнера плеера (как у вас) */
         .player-container {
             position: absolute;
             top: 1000px;
@@ -16,45 +15,169 @@
             height: 500px;
             z-index: 1000;
         }
+
+        /* Стили для кнопок переключения */
+        .version-switcher {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 10000;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 20px;
+            border-radius: 60px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .version-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        #btnMobile {
+            background: #e81e4d;
+        }
+
+        #btnFull {
+            background: #4CAF50;
+        }
+
+        .version-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .version-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Адаптация кнопок на маленьких экранах */
+        @media (max-width: 600px) {
+            .version-switcher {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                gap: 10px;
+                flex-direction: column;
+                border-radius: 30px;
+            }
+            .version-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Стили для изображений (без изменений) */
+        .desktop-image {
+            position: absolute;
+            left: 1675px;
+            top: 0;
+        }
+        /* Добавьте свои стили для изображений, если нужно */
     </style>
-    
-    <!-- ИСПРАВЛЕНО: JavaScript теперь внутри тега <script> -->
-    <script>
-        // Функция для перехода на мобильную версию
-        function switchToMobile() {
-            localStorage.setItem('version', 'mobile');
-            // ЗАМЕНИТЕ НА ВАШ АДРЕС: 
-            window.location.href = "https://radiodjboga.online"; 
-        }
-        
-        // Функция для перехода на полную версию
-        function switchToFull() {
-            localStorage.setItem('version', 'full');
-            // ЗАМЕНИТЕ НА ВАШ АДРЕС:
-            window.location.href = "https://radiodjboga.online";
-        }
-        
-        // ИСПРАВЛЕНО: Условие для автоматического редиректа теперь выполняется
-        function switchToFull() {
-    localStorage.setItem('version', 'full');
-    window.location.href = "https://www.radiodjboga.online"; // Или другой адрес ПК-версии
-}
-    </script>
 </head>
 <body>
-    <!-- Изображения -->
+
+    <!-- ВАШИ ИЗОБРАЖЕНИЯ (без изменений) -->
     <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1675px; top: 0;">
     <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
     <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
-    
-    <!-- Плеер -->
+
+    <!-- ВАШ ПЛЕЕР (без изменений) -->
     <div class="player-container">
         <div data-type="newStreamPlayer" data-publicToken="7cb75f5e-9e0a-4716-b67f-7e4940ba6987" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a> 
-            <a href="https://www.caster.fm">Stream Hosting</a> 
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
             <a href="https://www.caster.fm">Radio Server Hosting</a>
         </div>
         <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
     </div>
+
+    <!-- === НОВЫЙ БЛОК: Кнопки переключения версий === -->
+    <div class="version-switcher">
+        <button id="btnMobile" class="version-btn" onclick="switchToMobile()">📱 Мобильная</button>
+        <button id="btnFull" class="version-btn" onclick="switchToFull()">💻 Полная</button>
+    </div>
+
+    <!-- === НОВЫЙ СКРИПТ: Логика переключения === -->
+    <script>
+        // --- Функции для ручного переключения (ваши, немного доработанные) ---
+        function switchToMobile() {
+            localStorage.setItem('version', 'mobile');
+            // !!! ЗАМЕНИТЕ НА РЕАЛЬНЫЙ АДРЕС ВАШЕЙ МОБИЛЬНОЙ ВЕРСИИ !!!
+            window.location.href = "https://mobile.radiodjboga.online";
+        }
+
+        function switchToFull() {
+            localStorage.setItem('version', 'full');
+            // !!! ЗАМЕНИТЕ НА РЕАЛЬНЫЙ АДРЕС ВАШЕЙ ПОЛНОЙ ВЕРСИИ !!!
+            window.location.href = "https://www.radiodjboga.online";
+        }
+
+        // --- НОВОЕ: Автоматическое переключение при изменении размера окна ---
+        function checkWindowSizeAndRedirect() {
+            // Не выполняем редирект, если мы уже на нужной версии (проверяем localStorage)
+            const currentVersion = localStorage.getItem('version');
+
+            // Если ширине экрана меньше или равно 768px (мобильное устройство)
+            if (window.innerWidth <= 768) {
+                // И если мы не в мобильной версии (или флаг не установлен)
+                if (currentVersion !== 'mobile') {
+                    console.log('Авторедирект на мобильную версию');
+                    localStorage.setItem('version', 'mobile'); // Ставим флаг
+                    // !!! ЗАМЕНИТЕ НА АДРЕС МОБИЛЬНОЙ ВЕРСИИ !!!
+                    window.location.href = "https://mobile.radiodjboga.online";
+                }
+            } else { // Если ширина больше 768px (ПК)
+                // И если мы не в полной версии
+                if (currentVersion !== 'full') {
+                    console.log('Авторедирект на полную версию');
+                    localStorage.setItem('version', 'full'); // Ставим флаг
+                    // !!! ЗАМЕНИТЕ НА АДРЕС ПОЛНОЙ ВЕРСИИ !!!
+                    window.location.href = "https://www.radiodjboga.online";
+                }
+            }
+        }
+
+        // --- Запускаем проверку при загрузке страницы ---
+        checkWindowSizeAndRedirect();
+
+        // --- И при изменении размера окна (например, если пользователь развернул окно на ПК) ---
+        window.addEventListener('resize', function() {
+            // Используем "debounce", чтобы функция не срабатывала слишком часто
+            clearTimeout(window.resizedFinished);
+            window.resizedFinished = setTimeout(() => {
+                checkWindowSizeAndRedirect();
+            }, 250); // Подождем 250мс после окончания изменения размера
+        });
+
+        // Дополнительно: проверяем ориентацию устройства (полезно для планшетов)
+        window.addEventListener('orientationchange', function() {
+            setTimeout(checkWindowSizeAndRedirect, 200);
+        });
+
+        console.log('Система переключения версий активирована. Текущая версия:', localStorage.getItem('version') || 'не установлена');
+    </script>
+
+    <!-- Небольшое пояснение (можно удалить) -->
+    <!--
+        ⚠️ ВАЖНО: Замените адреса https://mobile.radiodjboga.online и https://www.radiodjboga.online
+        на реальные адреса ваших версий сайта.
+        Если у вас пока нет отдельных адресов, этот код будет перенаправлять сам на себя,
+        что вызовет бесконечный редирект. Временно закомментируйте строки с window.location.href
+        внутри функций и в checkWindowSizeAndRedirect для тестирования кнопок и авторедиректа.
+    -->
+
 </body>
 </html>
