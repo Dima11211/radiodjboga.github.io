@@ -2,92 +2,76 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Важный тег для правильного отображения на мобильных -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Мобильная версия</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плеер с обложкой</title>
     <style>
-        /* Базовый сброс стилей для мобильных */
-        * {
-            margin: 0;
+        body, html {
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #ffffff;
+            margin: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background: #f0f0f0;
         }
-
-        /* Основной контейнер на всю ширину экрана */
-        .mobile-container {
+        
+        /* Контейнер плеера */
+        .player-container {
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            width: 800px;        /* Ширина */
+            height: 800px;        /* Высота = ширине - квадрат */
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            background: #1a1a1a;  /* Темный фон для плеера */
+        }
+        
+        /* Плеер на всю ширину */
+        .player-container iframe {
             width: 100%;
-            max-width: 480px; /* Ограничение для больших телефонов */
-            margin: 0 auto;
-            padding: 16px;
-            flex: 1;
+            height: 100%;
+            border: none;
         }
-
-        /* Современные сенсорные элементы (пустые, но готовые к наполнению) */
-        .touch-area {
-            min-height: 48px; /* Минимальный размер для комфортного нажатия */
+        
+        /* Изображение на фоне */
+        .bg-image {
+            position: absolute;
+            left: 680px;
+            top: 248px;
+            width: 1000px;
+            height: auto;
+            z-index: 1;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Альтернатива - обложка внутри плеера */
+        .player-with-cover {
+            position: relative;
             width: 100%;
+            height: 100%;
         }
-
-        /* Заголовок для примера (пустой, но можно заполнить) */
-        .mobile-header {
+        
+        .player-with-cover iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 56px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            height: 100%;
+            z-index: 2;
         }
-
-        /* Контентная область */
-        .content {
-            width: 100%;
-            min-height: calc(100vh - 200px);
-            background-color: transparent;
-        }
-
-        /* Нижняя навигация (пустая) */
-        .bottom-nav {
-            width: 100%;
-            height: 64px;
-            background-color: #f8f9fa;
-            border-radius: 20px 20px 0 0;
-            margin-top: auto;
-        }
-
-        /* Утилиты для отступов */
-        .mt-2 { margin-top: 8px; }
-        .mb-2 { margin-bottom: 8px; }
-        .p-2 { padding: 8px; }
     </style>
 </head>
 <body>
-    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 0px; top: 0; width: 100%; height: auto;">
-    <div class="mobile-container">
-        <!-- Пустой верхний блок (можно заменить на header) -->
-        <header class="mobile-header"></header>
-
-        <!-- Основная пустая область контента -->
-        <main class="content">
-            <!-- Здесь будет контент -->
-            <div class="touch-area">
-                    
-            </div>
-            
-
-
-
-    <!-- Место для подключения скриптов -->
-    <script>
-        // Здесь может быть ваш JavaScript
-        console.log('Готовая мобильная оболочка');
-    </script>
+    <!-- Ваше изображение отдельно от плеера -->
+    <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" class="bg-image">
+    
+    <!-- Квадратный плеер -->
+    <div class="player-container">
+        <iframe src="https://widgets.cloud.caster.fm/player/?publicToken=7cb75f5e-9e0a-4716-b67f-7e4940ba6987&theme=light&color=e81e4d&desktop=true" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+        </iframe>
+    </div>
 </body>
 </html>
-
