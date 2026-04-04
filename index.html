@@ -50,12 +50,11 @@
         }
 
         .mobile-container {
-            position: fixed;
-            top: -20;
+               position: fixed;
+            bottom: auto;       /* Отключаем привязку к низу */
+            top: 0;             /* Привязываем к верху */
             left: 0;
-            right: auto;        /* Отключаем автоматическое прижатие к правому краю */
-            width: 680px;
-            max-width: 95%;
+            width: 680px;       /* Ширина 680px */
             margin: 0;
             z-index: 10000;
             background: transparent;
