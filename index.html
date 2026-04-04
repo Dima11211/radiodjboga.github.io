@@ -51,22 +51,21 @@
 
         .mobile-container {
             position: fixed;
-            bottom: auto;       /* Отключаем привязку к низу */
-            top: -10;             /* Привязываем к верху */
+            top: 0;             /* Привязан к верху */
             left: 0;
-            width: 680px;       /* Ширина 680px */
+            width: 680px;
             margin: 0;
             z-index: 10000;
             background: transparent;
             border-radius: 0;
             padding: 0;
         }
-        
+
         .custom-player {
             background: #03fff7;
             border-radius: 0;
             padding: 0;
-            margin-top: 15px;
+            margin-top: 0;      /* Убираем отступ сверху */
             margin-bottom: 20px;
             box-shadow: 0 12px 28px rgba(3, 255, 247, 0.2);
             overflow: hidden;
@@ -75,7 +74,7 @@
         .button-container {
             display: flex;
             justify-content: center;
-            padding: 4px 0 4px 0;
+            padding: 20px 0 20px 0;  /* Увеличены отступы */
             background: #03fff7;
             border-bottom: 2px solid rgba(255, 255, 255, 0.5);
         }
