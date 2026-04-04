@@ -15,6 +15,28 @@
     </script>
     
     <style>
+                /* === НАСТРОЙКИ РАЗМЕРА ПЛЕЕРА === */
+        :root {
+            --player-width: 480px;      /* Максимальная ширина плеера */
+            --canvas-height: 180px;     /* Высота эквалайзера */
+            --button-width: 180px;      /* Ширина кнопки */
+            --button-padding: 10px;     /* Вертикальный отступ кнопки */
+            --button-font-size: 1.3rem; /* Размер текста кнопки */
+        }
+    
+        .mobile-container {
+            max-width: var(--player-width);
+        }
+
+        canvas {
+            height: var(--canvas-height);
+        }
+    
+        .play-stop-btn {
+            width: var(--button-width);
+            padding: var(--button-padding) 0;
+            font-size: var(--button-font-size);
+        }
         * {
             margin: 0;
             padding: 0;
