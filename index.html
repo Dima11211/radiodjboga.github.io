@@ -6,7 +6,6 @@
     <title>RADIO DJ BOGA | Интернет Радио</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
-    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L3147Z3JSN"></script>
     <script>
@@ -17,7 +16,7 @@
     </script>
     
     <style>
-                /* === НАСТРОЙКИ РАЗМЕРА ПЛЕЕРА === */
+        /* === НАСТРОЙКИ РАЗМЕРА ПЛЕЕРА === */
         :root {
             --player-width: 700px;      /* Максимальная ширина плеера */
             --canvas-height: 180px;     /* Высота эквалайзера */
@@ -49,6 +48,8 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #f8f9fc 0%, #f0f2f5 100%);
             min-height: 100vh;
+            /* Добавляем отступ снизу, чтобы контент не наезжал на кнопки переключения версий */
+            padding-bottom: 120px;
         }
 
         .mobile-container {
@@ -124,6 +125,39 @@
             font-weight: 500;
         }
 
+        /* === НОВЫЙ БЛОК: Контактная информация === */
+        .contact-footer {
+            position: relative;
+            z-index: 1000; /* Чтобы быть под кнопками, но выше основного фона */
+            text-align: center;
+            padding: 20px 15px;
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            color: #eee;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+        
+        .contact-footer a {
+            color: #03fff7;
+            text-decoration: none;
+            font-weight: bold;
+            transition: opacity 0.2s ease;
+        }
+        
+        .contact-footer a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        .contact-footer p {
+            margin: 5px 0;
+        }
+
         .version-switcher {
             position: fixed;
             bottom: 30px;
@@ -193,6 +227,9 @@
             canvas {
                 height: 150px;
             }
+            body {
+                padding-bottom: 160px;
+            }
         }
     </style>
 </head>
@@ -214,6 +251,13 @@
             </div>
         </div>
         <div class="status-text" id="statusText">Готов к воспроизведению</div>
+    </div>
+
+    <!-- === НОВЫЙ БЛОК: КОНТАКТНАЯ ИНФОРМАЦИЯ === -->
+    <div class="contact-footer">
+        <p>📻 RADIO DJ BOGA — Интернет-радио</p>
+        <p>📧 Контактные данные: <a href="mailto:radiodjboga@gmail.com">radiodjboga@gmail.com</a></p>
+        <p>© 2026 · Музыка 24/7</p>
     </div>
 
     <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ -->
@@ -562,7 +606,7 @@
             }
         }
 
-        // ВАЖНО: Закомментируйте автоматический редирект при тестировании!
+        // ВАЖНО: Закомментирован автоматический редирект!
         // checkWindowSizeAndRedirect();
         
         // Раскомментируйте только когда укажете правильные адреса
