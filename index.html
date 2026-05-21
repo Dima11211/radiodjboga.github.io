@@ -6,6 +6,7 @@
     <title>RADIO DJ BOGA | Интернет Радио</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L3147Z3JSN"></script>
     <script>
@@ -16,44 +17,17 @@
     </script>
     
     <style>
-        /* === ОСНОВНЫЕ СТИЛИ === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Страница на весь экран, с флексом чтобы прижать футер */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f8f9fc 0%, #f0f2f5 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Контентная часть (плеер и изображения) */
-        .content {
-            flex: 1 0 auto;
-            position: relative;
-            padding-bottom: 20px;
-        }
-
-        /* НАСТРОЙКИ РАЗМЕРА ПЛЕЕРА */
+                /* === НАСТРОЙКИ РАЗМЕРА ПЛЕЕРА === */
         :root {
-            --player-width: 700px;
-            --canvas-height: 180px;
-            --button-width: 180px;
-            --button-padding: 10px;
-            --button-font-size: 1.3rem;
+            --player-width: 700px;      /* Максимальная ширина плеера */
+            --canvas-height: 180px;     /* Высота эквалайзера */
+            --button-width: 180px;      /* Ширина кнопки */
+            --button-padding: 10px;     /* Вертикальный отступ кнопки */
+            --button-font-size: 1.3rem; /* Размер текста кнопки */
         }
     
         .mobile-container {
             max-width: var(--player-width);
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
         }
 
         canvas {
@@ -65,19 +39,44 @@
             padding: var(--button-padding) 0;
             font-size: var(--button-font-size);
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fc 0%, #f0f2f5 100%);
+            min-height: 100vh;
+        }
+
+        .mobile-container {
+            position: fixed;
+            top: 0;             /* Привязан к верху */
+            left: 0;
+            width: 680px;
+            margin: 0;
+            z-index: 10000;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+        }
 
         .custom-player {
             background: #03fff7;
-            border-radius: 20px;
-            margin: 20px;
-            overflow: hidden;
+            border-radius: 0;
+            padding: 0;
+            margin-top: 0;      /* Убираем отступ сверху */
+            margin-bottom: 20px;
             box-shadow: 0 12px 28px rgba(3, 255, 247, 0.2);
+            overflow: hidden;
         }
 
         .button-container {
             display: flex;
             justify-content: center;
-            padding: 20px 0;
+            padding: 20px 0 20px 0;  /* Увеличены отступы */
             background: #03fff7;
             border-bottom: 2px solid rgba(255, 255, 255, 0.5);
         }
@@ -123,39 +122,8 @@
             margin-top: 15px;
             font-size: 0.75rem;
             font-weight: 500;
-            padding-bottom: 10px;
         }
 
-        /* ФУТЕР (внизу страницы) */
-        .contact-footer {
-            flex-shrink: 0;
-            text-align: center;
-            padding: 15px 15px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            color: #eeeeee;
-            font-size: 0.85rem;
-            font-family: monospace;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 30px;
-        }
-        
-        .contact-footer p {
-            margin: 4px 0;
-        }
-        
-        .contact-email {
-            color: #03fff7;
-            font-weight: bold;
-            user-select: text; /* Чтобы можно было выделить текст */
-            cursor: text;      /* Обычный курсор, а не рука */
-            background: rgba(255,255,255,0.1);
-            padding: 2px 8px;
-            border-radius: 12px;
-            display: inline-block;
-        }
-
-        /* КНОПКИ ПЕРЕКЛЮЧЕНИЯ ВЕРСИЙ */
         .version-switcher {
             position: fixed;
             bottom: 30px;
@@ -225,55 +193,30 @@
             canvas {
                 height: 150px;
             }
-            .contact-footer {
-                padding: 10px;
-                font-size: 0.75rem;
-            }
-        }
-        
-        /* Стили для изображений (чтобы не ломали флекс на мобилках) */
-        .content img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        /* Убираем абсолютное позиционирование для изображений, чтобы они не перекрывали футер */
-        .content img {
-            position: static !important;
-            margin: 10px auto;
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <!-- ВАШИ ИЗОБРАЖЕНИЯ (убран absolute, теперь они в потоке) -->
-        <div style="text-align: center;">
-            <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="max-width: 100%;">
-            <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="max-width: 100%; width: 1000px;">
-            <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="max-width: 100%; width: 1000px; height: auto;">
-        </div>
 
-        <!-- МОБИЛЬНЫЙ ПЛЕЕР -->
-        <div class="mobile-container">
-            <div class="custom-player">
-                <div class="button-container">
-                    <button class="play-stop-btn" id="playStopBtn">▶ PLAY</button>
-                </div>
-                <div class="visualizer-container">
-                    <canvas id="visualizerCanvas" width="800" height="180"></canvas>
-                </div>
+    <!-- ВАШИ ИЗОБРАЖЕНИЯ -->
+    <img src="img/20260225_2221_image.png" alt="RADIO DJ BOGA" style="position: absolute; left: 1675px; top: 0;">
+    <img src="img/result_Без имени-1 копия.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 0px; width: 1000px; height: auto;">
+    <img src="img/i1.jpg" alt="RADIO DJ BOGA" style="position: absolute; left: 680px; top: 1000px; width: 1000px; height: 248px;">
+
+    <!-- МОБИЛЬНЫЙ ПЛЕЕР -->
+    <div class="mobile-container">
+        <div class="custom-player">
+            <div class="button-container">
+                <button class="play-stop-btn" id="playStopBtn">▶ PLAY</button>
             </div>
-            <div class="status-text" id="statusText">Готов к воспроизведению</div>
+            <div class="visualizer-container">
+                <canvas id="visualizerCanvas" width="800" height="180"></canvas>
+            </div>
         </div>
+        <div class="status-text" id="statusText">Готов к воспроизведению</div>
     </div>
 
-    <!-- ФУТЕР С КОНТАКТАМИ (ВНИЗУ СТРАНИЦЫ, НЕ НАЖИМАЕТСЯ) -->
-    <div class="contact-footer">
-        <p>📻 RADIO DJ BOGA — Интернет-радио</p>
-        <p>📧 Контактные данные: <span class="contact-email">radiodjboga@gmail.com</span></p>
-    </div>
-
-    <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ (оставлены как были) -->
+    <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ -->
     <div class="version-switcher">
         <button id="btnMobile" class="version-btn" onclick="switchToMobile()">📱 Мобильная</button>
         <button id="btnFull" class="version-btn" onclick="switchToFull()">💻 Полная</button>
@@ -316,7 +259,6 @@
         
         function resizeCanvas() {
             const container = canvas.parentElement;
-            if (!container) return;
             const width = container.clientWidth - 32;
             canvas.width = width;
             canvas.height = 180;
@@ -330,7 +272,7 @@
         }
         
         window.addEventListener('resize', () => setTimeout(resizeCanvas, 100));
-        setTimeout(() => resizeCanvas(), 50);
+        resizeCanvas();
         
         async function initWebAudioForRadio() {
             if (!audioElement) return false;
@@ -591,7 +533,7 @@
         });
         
         // ============================================================
-        // ПЕРЕКЛЮЧЕНИЕ ВЕРСИЙ
+        // ПЕРЕКЛЮЧЕНИЕ ВЕРСИЙ - ИСПРАВЛЕНО
         // ============================================================
         function switchToMobile() {
             localStorage.setItem('version', 'mobile');
@@ -603,23 +545,46 @@
             window.location.href = FULL_URL;
         }
 
-        // Функция автоматического редиректа (пока закомментирована)
-        // function checkWindowSizeAndRedirect() {
-        //     const currentVersion = localStorage.getItem('version');
-        //     if (window.innerWidth <= 768) {
-        //         if (currentVersion !== 'mobile') {
-        //             console.log('Авторедирект на мобильную версию');
-        //             localStorage.setItem('version', 'mobile');
-        //             window.location.href = MOBILE_URL;
-        //         }
-        //     } else {
-        //         if (currentVersion !== 'full') {
-        //             console.log('Авторедирект на полную версию');
-        //             localStorage.setItem('version', 'full');
-        //             window.location.href = FULL_URL;
-        //         }
-        //     }
-        // }
+        function checkWindowSizeAndRedirect() {
+            const currentVersion = localStorage.getItem('version');
+            if (window.innerWidth <= 768) {
+                if (currentVersion !== 'mobile') {
+                    console.log('Авторедирект на мобильную версию');
+                    localStorage.setItem('version', 'mobile');
+                    window.location.href = MOBILE_URL;
+                }
+            } else {
+                if (currentVersion !== 'full') {
+                    console.log('Авторедирект на полную версию');
+                    localStorage.setItem('version', 'full');
+                    window.location.href = FULL_URL;
+                }
+            }
+        }
+
+        // ВАЖНО: Закомментируйте автоматический редирект при тестировании!
+        // checkWindowSizeAndRedirect();
+        
+        // Раскомментируйте только когда укажете правильные адреса
+        /*
+        window.addEventListener('resize', function() {
+            clearTimeout(window.resizedFinished);
+            window.resizedFinished = setTimeout(() => {
+                checkWindowSizeAndRedirect();
+            }, 250);
+        });
+
+        window.addEventListener('orientationchange', function() {
+            setTimeout(checkWindowSizeAndRedirect, 200);
+        });
+        */
     </script>
+    <!-- Весь остальной код страницы (плеер, картинки, кнопки) -->
+
+    <!-- КОНТАКТНЫЕ ДАННЫЕ (В САМОМ НИЗУ) -->
+    <div style="text-align: center; padding: 20px; margin-top: 30px; font-family: monospace; background: rgba(0,0,0,0.05); border-top: 1px solid #ccc;">
+        <p>📧 Контактные данные: <span style="background: #000; color: #03fff7; padding: 4px 12px; border-radius: 20px;">radiodjboga@gmail.com</span></p>
+    </div>
+
 </body>
 </html>
