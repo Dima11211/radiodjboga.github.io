@@ -298,13 +298,13 @@
         <div class="status-text" id="statusText">Готов к воспроизведению</div>
     </div>
 
-    <!-- ===== СПИСОК ТРЕКОВ (БЕЗ ЗАГОЛОВКА И БЕЗ ФОНА) ===== -->
+    <!-- ===== СПИСОК ТРЕКОВ (ТРЕКИ ИЗ ПАПКИ TRACKS) ===== -->
     <div class="tracks-container">
         <div class="track-list">
             <!-- Трек 1 -->
             <div class="track-item" data-track-idx="0">
                 <div class="track-info">
-                    <div class="track-name">Time's echo</div>
+                    <div class="track-name">В НЕБЕ</div>
                     <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="0">▶ Слушать</button>
@@ -313,7 +313,7 @@
             <!-- Трек 2 -->
             <div class="track-item" data-track-idx="1">
                 <div class="track-info">
-                    <div class="track-name">Elecrto motor</div>
+                    <div class="track-name">РАССВЕТ</div>
                     <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="1">▶ Слушать</button>
@@ -322,7 +322,7 @@
             <!-- Трек 3 -->
             <div class="track-item" data-track-idx="2">
                 <div class="track-info">
-                    <div class="track-name">Rock it</div>
+                    <div class="track-name">ЭЙ БРО</div>
                     <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="2">▶ Слушать</button>
@@ -345,14 +345,17 @@
         // ============================================================
         const RADIO_STREAM_URL = "https://radio.radiodjboga.online/stream";
         
-        // ССЫЛКИ НА ВАШИ ТРЕКИ (ЗАМЕНИТЕ НА РЕАЛЬНЫЕ URL)
+        // ТРЕКИ ИЗ ПАПКИ tracks (локально на GitHub Pages)
         const TRACKS = [
-            { name: "В НЕБЕ", artist: "RADIO DJ BOGA", url: "https://your-server.com/tracks/v_nebe.mp3" },
-            { name: "РАССВЕТ", artist: "RADIO DJ BOGA", url: "https://your-server.com/tracks/rassvet.mp3" },
-            { name: "ЭЙ БРО", artist: "RADIO DJ BOGA", url: "https://your-server.com/tracks/ey_bro.mp3" }
+            { name: "Time's echo", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Time_s-Echo.mp3" },
+            { name: "Electric motor", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Electric-Motor.mp3" },
+            { name: "Rock it", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Rock-it.mp3" }
         ];
         
-        // ⚠️ ВАЖНО: Замените URL треков на реальные адреса ваших mp3 файлов!
+        // ⚠️ ВАЖНО: Положите mp3 файлы в папку tracks с именами:
+        // - v_nebe.mp3
+        // - rassvet.mp3  
+        // - ey_bro.mp3
         // ============================================================
 
         const playStopBtn = document.getElementById('playStopBtn');
@@ -647,9 +650,10 @@
                         clearTimeout(timeout);
                         resolve();
                     }, { once: true });
-                    newAudio.addEventListener('error', () => {
+                    newAudio.addEventListener('error', (e) => {
                         clearTimeout(timeout);
-                        reject(new Error('Ошибка загрузки трека'));
+                        console.error('Audio error:', e);
+                        reject(new Error('Ошибка загрузки трека. Проверьте что файл существует в папке tracks'));
                     }, { once: true });
                     newAudio.load();
                 });
@@ -683,7 +687,7 @@
                 
             } catch (err) {
                 console.error(err);
-                updateStatus('Ошибка загрузки трека', true);
+                updateStatus('Ошибка: файл трека не найден. Положите mp3 в папку tracks', true);
                 buttonElement.innerHTML = '▶ Слушать';
                 buttonElement.classList.remove('playing');
             }
