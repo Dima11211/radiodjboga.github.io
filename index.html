@@ -111,48 +111,38 @@
             font-weight: 500;
         }
 
-        /* ===== СТИЛИ ДЛЯ СПИСКА ТРЕКОВ ===== */
+        /* ===== СТИЛИ ДЛЯ СПИСКА ТРЕКОВ (БЕЗ ФОНА) ===== */
         .tracks-container {
             position: absolute;
             top: 320px;
             left: 0;
             width: 680px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 0;
-            padding: 20px;
+            background: transparent;
+            padding: 10px 20px;
             margin-top: 0;
             z-index: 10000;
-        }
-
-        .tracks-title {
-            color: #03fff7;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-            letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .track-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .track-item {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: all 0.3s ease;
-            border: 1px solid rgba(3, 255, 247, 0.2);
+            border: 1px solid rgba(3, 255, 247, 0.3);
+            backdrop-filter: blur(5px);
         }
 
         .track-item:hover {
-            background: rgba(3, 255, 247, 0.15);
+            background: rgba(3, 255, 247, 0.2);
             border-color: #03fff7;
             transform: translateX(5px);
         }
@@ -170,8 +160,8 @@
         }
 
         .track-artist {
-            color: #aaa;
-            font-size: 0.8rem;
+            color: #ccc;
+            font-size: 0.75rem;
         }
 
         .play-track-btn {
@@ -202,11 +192,10 @@
 
         .current-track-indicator {
             text-align: center;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(3, 255, 247, 0.3);
-            font-size: 0.75rem;
-            color: #aaa;
+            margin-top: 12px;
+            padding-top: 8px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.7);
         }
 
         .current-track-name {
@@ -309,9 +298,8 @@
         <div class="status-text" id="statusText">Готов к воспроизведению</div>
     </div>
 
-    <!-- ===== СПИСОК ТРЕКОВ ===== -->
+    <!-- ===== СПИСОК ТРЕКОВ (БЕЗ ЗАГОЛОВКА И БЕЗ ФОНА) ===== -->
     <div class="tracks-container">
-        <div class="tracks-title">🎵 МОИ ТРЕКИ 🎵</div>
         <div class="track-list">
             <!-- Трек 1 -->
             <div class="track-item" data-track-idx="0">
@@ -365,7 +353,6 @@
         ];
         
         // ⚠️ ВАЖНО: Замените URL треков на реальные адреса ваших mp3 файлов!
-        // Например: "https://radiodjboga.online/tracks/v_nebe.mp3"
         // ============================================================
 
         const playStopBtn = document.getElementById('playStopBtn');
@@ -388,14 +375,12 @@
         let canvasHeight = 180;
         let prevValues = [];
         
-        // Функция обновления статуса
         function updateStatus(msg, isError = false) {
             statusSpan.textContent = msg;
             statusSpan.style.color = isError ? '#e74c3c' : '#1a1a2e';
             console.log(msg);
         }
         
-        // Обновление индикатора текущего трека
         function updateCurrentTrackIndicator(trackName) {
             const indicator = document.getElementById('currentTrackName');
             if (indicator) {
@@ -538,7 +523,6 @@
             draw();
         }
         
-        // Воспроизведение радио
         async function startPlayback() {
             try {
                 updateStatus('Подключение к потоку...');
@@ -585,7 +569,6 @@
                 updateStatus('▶ Радио в эфире');
                 updateCurrentTrackIndicator('Радио онлайн');
                 
-                // Сброс активной кнопки трека
                 if (currentTrackElement) {
                     currentTrackElement.innerHTML = '▶ Слушать';
                     currentTrackElement.classList.remove('playing');
@@ -631,7 +614,6 @@
             }
         }
         
-        // Воспроизведение трека
         async function playTrack(trackIndex, buttonElement) {
             const track = TRACKS[trackIndex];
             if (!track || !track.url) {
@@ -642,7 +624,6 @@
             try {
                 updateStatus(`Загрузка: ${track.name}...`);
                 
-                // Останавливаем текущее воспроизведение
                 if (audioElement) {
                     audioElement.pause();
                     audioElement.src = '';
@@ -680,14 +661,12 @@
                 if (audioContext && audioContext.state === 'suspended') await audioContext.resume();
                 await audioElement.play();
                 
-                // Обновляем состояние
                 isPlaying = false;
                 isTrackPlaying = true;
                 playStopBtn.innerHTML = '⏹ STOP';
                 updateStatus(`🎵 ${track.name} - ${track.artist}`);
                 updateCurrentTrackIndicator(`${track.name}`);
                 
-                // Обновляем кнопку трека
                 if (currentTrackElement) {
                     currentTrackElement.innerHTML = '▶ Слушать';
                     currentTrackElement.classList.remove('playing');
@@ -696,7 +675,6 @@
                 buttonElement.classList.add('playing');
                 currentTrackElement = buttonElement;
                 
-                // Обработка окончания трека
                 audioElement.onended = () => {
                     if (isTrackPlaying) {
                         stopPlayback();
@@ -748,7 +726,6 @@
             drawDemo();
         }
         
-        // Инициализация кнопок треков
         function initTrackButtons() {
             const trackButtons = document.querySelectorAll('.play-track-btn');
             trackButtons.forEach((btn, idx) => {
@@ -757,10 +734,8 @@
                     const isThisTrackPlaying = btn.classList.contains('playing');
                     
                     if (isThisTrackPlaying) {
-                        // Останавливаем текущий трек
                         stopPlayback();
                     } else {
-                        // Играем выбранный трек
                         playTrack(idx, btn);
                     }
                 });
@@ -779,9 +754,6 @@
             if (demoAnimationId) cancelAnimationFrame(demoAnimationId);
         });
         
-        // ============================================================
-        // ПЕРЕКЛЮЧЕНИЕ ВЕРСИЙ
-        // ============================================================
         function switchToMobile() {
             localStorage.setItem('version', 'mobile');
             window.location.href = "https://mobile.radiodjboga.online";
