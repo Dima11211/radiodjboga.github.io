@@ -111,7 +111,7 @@
             font-weight: 500;
         }
 
-        /* ===== СТИЛИ ДЛЯ СПИСКА ТРЕКОВ (БЕЗ ФОНА) ===== */
+        /* ===== СТИЛИ ДЛЯ СПИСКА ТРЕКОВ ===== */
         .tracks-container {
             position: absolute;
             top: 320px;
@@ -121,6 +121,16 @@
             padding: 10px 20px;
             margin-top: 0;
             z-index: 10000;
+        }
+
+        .tracks-title {
+            color: #03fff7;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: left;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .track-list {
@@ -157,11 +167,6 @@
             color: white;
             font-size: 1rem;
             font-weight: 600;
-        }
-
-        .track-artist {
-            color: #ccc;
-            font-size: 0.75rem;
         }
 
         .play-track-btn {
@@ -300,12 +305,12 @@
 
     <!-- ===== СПИСОК ТРЕКОВ ===== -->
     <div class="tracks-container">
+        <div class="tracks-title">ТРЕКИ DJ BOGA</div>
         <div class="track-list">
             <!-- Трек 1 -->
             <div class="track-item" data-track-idx="0">
                 <div class="track-info">
                     <div class="track-name">Time's echo</div>
-                    <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="0">▶ Слушать</button>
             </div>
@@ -314,7 +319,6 @@
             <div class="track-item" data-track-idx="1">
                 <div class="track-info">
                     <div class="track-name">Electric motor</div>
-                    <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="1">▶ Слушать</button>
             </div>
@@ -323,7 +327,6 @@
             <div class="track-item" data-track-idx="2">
                 <div class="track-info">
                     <div class="track-name">Rock it</div>
-                    <div class="track-artist">RADIO DJ BOGA</div>
                 </div>
                 <button class="play-track-btn" data-track="2">▶ Слушать</button>
             </div>
@@ -345,11 +348,11 @@
         // ============================================================
         const RADIO_STREAM_URL = "https://radio.radiodjboga.online/stream";
         
-        // ТРЕКИ ИЗ ПАПКИ tracks
+        // ТРЕКИ
         const TRACKS = [
-            { name: "Time's echo", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Time_s-Echo.mp3" },
-            { name: "Electric motor", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Electric-Motor.mp3" },
-            { name: "Rock it", artist: "RADIO DJ BOGA", url: "tracks/DJ-BOGA-track-Rock-it.mp3" }
+            { name: "Time's echo", url: "tracks/DJ-BOGA-track-Time_s-Echo.mp3" },
+            { name: "Electric motor", url: "tracks/DJ-BOGA-track-Electric-Motor.mp3" },
+            { name: "Rock it", url: "tracks/DJ-BOGA-track-Rock-it.mp3" }
         ];
         // ============================================================
 
@@ -648,7 +651,7 @@
                     newAudio.addEventListener('error', (e) => {
                         clearTimeout(timeout);
                         console.error('Audio error:', e);
-                        reject(new Error('Ошибка загрузки трека. Проверьте что файл существует в папке tracks'));
+                        reject(new Error('Ошибка загрузки трека'));
                     }, { once: true });
                     newAudio.load();
                 });
@@ -663,7 +666,7 @@
                 isPlaying = false;
                 isTrackPlaying = true;
                 playStopBtn.innerHTML = '⏹ STOP';
-                updateStatus(`🎵 ${track.name} - ${track.artist}`);
+                updateStatus(`🎵 ${track.name}`);
                 updateCurrentTrackIndicator(`${track.name}`);
                 
                 if (currentTrackElement) {
@@ -682,7 +685,7 @@
                 
             } catch (err) {
                 console.error(err);
-                updateStatus('Ошибка: файл трека не найден. Положите mp3 в папку tracks', true);
+                updateStatus('Ошибка: файл трека не найден', true);
                 buttonElement.innerHTML = '▶ Слушать';
                 buttonElement.classList.remove('playing');
             }
