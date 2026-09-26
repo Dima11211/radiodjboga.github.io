@@ -369,7 +369,12 @@
         // ============================================================
         // НАСТРОЙКИ РАДИО И ТРЕКОВ
         // ============================================================
-        const RADIO_STREAM_URL = "https://radio.radiodjboga.online/stream/";
+        const RADIO_STREAM_BASE = "https://radio.radiodjboga.online/stream";
+        
+        function getRadioStreamUrl() {
+            // Уникальный параметр для обхода кэша + без слэша на конце
+            return RADIO_STREAM_BASE + "?_=" + Date.now() + "_" + Math.random().toString(36).substring(2, 8);
+        }
         
         const TRACKS = [
             { name: "Time's echo", url: "tracks/DJ-BOGA-track-Time_s-Echo.mp3" },
@@ -419,7 +424,6 @@
                 btnText.innerHTML = 'PLAY';
                 playStopBtn.classList.remove('playing');
             }
-            // Добавляем анимацию пульсации
             playStopBtn.classList.add('pulse');
             setTimeout(() => {
                 playStopBtn.classList.remove('pulse');
@@ -575,6 +579,7 @@
                 if (audioElement) {
                     audioElement.pause();
                     audioElement.src = '';
+                    audioElement.load();
                     audioElement = null;
                 }
                 if (audioContext && audioContext.state !== 'closed') {
@@ -585,7 +590,8 @@
                 }
                 
                 const newAudio = new Audio();
-                newAudio.src = RADIO_STREAM_URL;
+                newAudio.crossOrigin = 'anonymous';
+                newAudio.src = getRadioStreamUrl();
                 newAudio.preload = 'auto';
                 
                 await new Promise((resolve, reject) => {
@@ -594,8 +600,9 @@
                         clearTimeout(timeout);
                         resolve();
                     }, { once: true });
-                    newAudio.addEventListener('error', () => {
+                    newAudio.addEventListener('error', (e) => {
                         clearTimeout(timeout);
+                        console.error('Radio stream error:', e);
                         reject(new Error('Ошибка загрузки потока'));
                     }, { once: true });
                     newAudio.load();
@@ -634,21 +641,31 @@
         function stopPlayback() {
             if (audioElement) {
                 audioElement.pause();
-                if (isTrackPlaying) {
-                    audioElement.src = '';
-                    audioElement = null;
-                    isTrackPlaying = false;
-                    if (currentTrackElement) {
-                        currentTrackElement.innerHTML = '▶ Слушать';
-                        currentTrackElement.classList.remove('playing');
-                        currentTrackElement = null;
-                    }
-                }
+                audioElement.currentTime = 0;
+                audioElement.src = '';
+                audioElement.load();
+                audioElement = null;
             }
+            
             isPlaying = false;
+            isTrackPlaying = false;
+            
             updateButtonUI(false);
             updateStatus('⏹ Остановлено');
             updateCurrentTrackIndicator('—');
+            
+            if (currentTrackElement) {
+                currentTrackElement.innerHTML = '▶ Слушать';
+                currentTrackElement.classList.remove('playing');
+                currentTrackElement = null;
+            }
+            
+            if (audioContext && audioContext.state !== 'closed') {
+                if (animationId) cancelAnimationFrame(animationId);
+                try { audioContext.close(); } catch(e) {}
+                audioContext = null;
+                analyserNode = null;
+            }
         }
         
         async function togglePlayStop() {
@@ -672,6 +689,7 @@
                 if (audioElement) {
                     audioElement.pause();
                     audioElement.src = '';
+                    audioElement.load();
                     audioElement = null;
                 }
                 if (audioContext && audioContext.state !== 'closed') {
@@ -794,8 +812,14 @@
         updateStatus('🎵 Нажмите PLAY или выберите трек');
         
         window.addEventListener('beforeunload', () => {
-            if (audioElement) audioElement.pause();
-            if (audioContext) audioContext.close();
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.src = '';
+                audioElement = null;
+            }
+            if (audioContext && audioContext.state !== 'closed') {
+                try { audioContext.close(); } catch(e) {}
+            }
             if (animationId) cancelAnimationFrame(animationId);
             if (demoAnimationId) cancelAnimationFrame(demoAnimationId);
         });
